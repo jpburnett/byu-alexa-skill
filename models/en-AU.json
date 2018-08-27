@@ -1,0 +1,39 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "b. y. u. facts",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "GetNewFactIntent",
+          "samples": [
+            "Alexa open byu facts and give me a fact about BYU",
+            "Alexa launch byu facts",
+            "Alexa open byu facts and say something about BYU",
+            "Alexa open byu facts and say a fact about BYU",
+            "Alexa use byu facts to tell me about BYU",
+            "Alexa open byu facts and tell me something about BYU",
+            "Alexa tell me a byu fact",
+            "Alexa give me a BYU fact",
+            "Alexa give me an interesting BYU fact",
+            "Alexa open BYU Facts and give me a BYU Fact",
+            "tell BYU facts to tell me a BYU facts",
+            "Alexa start byu facts",
+            "Alexa open byu facts and tell me a byu fact"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+.DS_Store
+/lambda/custom/node_modules
+test/
+.ask
+skill.json
+.ask/config

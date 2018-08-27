@@ -1,0 +1,43 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "b. y. u. facts",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "GetNewFactIntent",
+          "samples": [
+            "open byu facts and give me a fact about BYU",
+            "launch byu facts",
+            "open byu facts and say something about BYU",
+            "open byu facts and say a fact about BYU",
+            "use byu facts to tell me about BYU",
+            "open byu facts and tell me something about BYU",
+            "tell me a byu fact",
+            "give me a BYU fact",
+            "give me an interesting BYU fact",
+            "open BYU Facts and give me a BYU Fact",
+            "tell BYU facts to tell me a BYU facts",
+            "start byu facts",
+            "open byu facts and tell me a byu fact"
+          ]
+        }
+      ]
+    }
+  }
+}
