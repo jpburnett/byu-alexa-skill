@@ -10,7 +10,6 @@ const HELP_REPROMPT = "How can I help you?";
 const STOP_MESSAGE = "Goodbye!";
 const FALLBACK_MESSAGE = 'BYU Facts skill can\'t help you with that.  It can help you get a fact about BYU. What can I help you with?';
 const FALLBACK_REPROMPT = 'What can I help you with?';
-const STOP_MESSAGE = 'Goodbye!';
 
 // A list of all the different BYU facts.
 const data = [
