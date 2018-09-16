@@ -138,7 +138,7 @@ const ErrorHandler = {
 // Helper Functions
 //////////////////////////////////////////////////////////////////////////////
 
-function getRandomItem(arrayOfItems){
+function getRandomItem(arrayOfItems) {
   // can take an array, or a dictionary
   if (Array.isArray(arrayOfItems)) {
     // the argument is an array []
