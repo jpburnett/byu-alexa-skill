@@ -1,6 +1,13 @@
+# ignore file
+node_modules/
+dump/
+
+
+skill_env/
+pyenv/
+lambda/py/utils/resources.py
+__pycache__/
+
+main.js
+*.json
 .DS_Store
-/lambda/custom/node_modules
-test/
-.ask
-skill.json
-.ask/config
