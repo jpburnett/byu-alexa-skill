@@ -2,12 +2,16 @@
 node_modules/
 dump/
 
-
 skill_env/
 pyenv/
 lambda/py/utils/resources.py
 __pycache__/
 
 main.js
+
+# Ignore all specifics
 *.json
+*.zip
+
+# Apple Files
 .DS_Store
