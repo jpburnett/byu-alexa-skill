@@ -56,7 +56,10 @@ data = [
   "25% of BYU undergraduates are married.",
   "The Spencer W. Kimball Tower is the tallest building on campus, it is also the tallest building in Provo!",
   "The Joseph Smith Religion Building is the only building on campus with a baptismal font.",
-  "BYU is located in the city of Provo, Utah"
+  "BYU is located in the city of Provo, Utah",
+  "Nearly 50% of all students have lived outside the United States",
+  "There are 63 different languages ranging from Arabic to Welsh taught on campus",
+  "There is a giant Po the Panda statue stands in the lobby of the Talmage Building"
 ]
 
 # ===============================================================================================
@@ -118,6 +121,23 @@ class CancelOrStopIntentHandler(AbstractRequestHandler):
         handler_input.response_builder.speak(STOP_MESSAGE)
         return handler_input.response_builder.response
 
+class RepeatIntentHandler(AbstractRequestHandler):
+    """Handler for Repeat Intent."""
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("AMAZON.RepeatIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        logger.info("In RepeatIntentHandler")
+        _ = handler_input.attributes_manager.request_attributes["_"]
+
+        attr = handler_input.attributes_manager.session_attributes
+        handler_input.response_builder.speak(
+            attr['speech']).ask(
+            attr['reprompt'])
+        return handler_input.response_builder.response
+
 
 class FallbackIntentHandler(AbstractRequestHandler):
     """Handler for Fallback Intent.
@@ -172,6 +192,62 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
 
         return handler_input.response_builder.response
 
+class YesIntentHandler(AbstractRequestHandler):
+    """Handler for the YesIntent."""
+    def can_handle(self, handler_input):
+        return is_intent_name("AMAZON.YesIntent")(handler_input)
+
+    def handle(self, handler_input):
+        logger.debug("In YesIntentHandler")
+        _ = handler_input.attributes_manager.request_attributes["_"]
+        session_attr = handler_input.attributes_manager.session_attributes
+
+        #Get what the previous intent was
+        prev_intent = session_attr.get("PREV_INTENT")
+
+        if prev_intent == "LaunchIntent":
+            speech = data.HELP_MESSAGE
+            reprompt = data.FALLBACK_MESSAGE
+
+            handler_input.response_builder.speak(speech) \
+            .set_should_end_session(False).ask(reprompt)
+            return handler_input.response_builder.response
+
+        if (prev_intent == "RecipeIntent"
+            or prev_intent == "RandomItemIntent"
+            or prev_intent == "AMAZON.YesIntent"
+            or prev_intent == "AMAZON.NoIntent"):
+            speech = data.HELP_MESSAGE
+            reprompt = data.FALLBACK_MESSAGE
+
+            handler_input.response_builder.speak(speech) \
+            .set_should_end_session(False).ask(reprompt)
+            return handler_input.response_builder.response
+
+class NoIntentHandler(AbstractRequestHandler):
+    """Handler for the NoIntent. Sometimes its okay to say no"""
+    def can_handle(self, handler_input):
+        return is_intent_name("AMAZON.NoIntent")(handler_input)
+
+    def handle(self, handler_input):
+        logger.debug("In NoIntentHandler")
+        _ = handler_input.attributes_manager.request_attributes["_"]
+        
+        speech = data.STOP_MESSAGE
+        handler_input.response_builder.speak(_(speech))
+            .set_should_end_session(True)
+
+        return handler_input.response_builder.response
+
+class LocalizationInterceptor(AbstractRequestInterceptor):
+    """Add function to request attributes, that can load locale specific data."""
+    def process(self, handler_input):
+        # type: (HandlerInput) -> None
+        locale = handler_input.request_envelope.request.locale
+        logger.info("Locale is {}".format(locale))
+        i18n = gettext.translation(
+            'data', localedir='locales', languages=[locale], fallback=True)
+        handler_input.attributes_manager.request_attributes["_"] = i18n.gettext
 
 # Request and Response loggers
 class RequestLogger(AbstractRequestInterceptor):
@@ -193,7 +269,12 @@ class ResponseLogger(AbstractResponseInterceptor):
 sb.add_request_handler(GetNewFactHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
+sb.add_request_handler(LocalizationInterceptor())
+sb.add_request_handler(NoIntentHandler())
 sb.add_request_handler(FallbackIntentHandler())
+sb.add_request_handler(NoIntentHandler())
+sb.add_request_handler(YesIntentHandler())
+sb.add_request_handler(RepeatIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
 
 # Register exception handlers
